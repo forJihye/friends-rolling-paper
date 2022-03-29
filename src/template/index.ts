@@ -8,6 +8,7 @@ export default {
       <meta charset="utf-8">
     </head>
     <body>
+      <a href="http://localhost:3000">메인으로</a>
       ${body}
     </body>
     </html>
