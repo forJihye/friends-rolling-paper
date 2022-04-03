@@ -7,7 +7,7 @@ import { restrict } from './middlewares/login';
 
 const app = express();
 const FileStore = sessionFileStore(session);
-const authController = require('../controllers/auth');
+const authController = require('./controllers/auth');
 const paperController = require('./controllers/paper');
 
 export const sessionOptions = {
