@@ -1,7 +1,6 @@
 import {Session} from 'express-session'
+import { Users } from '../routes/auth';
 
-declare global {
-  type SessionData = (
-    Session & Partial<{ name: string; userId: string; isLogined: boolean; }>
-  )
-}
+type SessionData = (
+  Session & Partial<{ user: Users; isLogined: boolean; }>
+)
