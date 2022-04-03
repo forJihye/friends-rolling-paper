@@ -8,7 +8,7 @@ export default {
       <meta charset="utf-8">
     </head>
     <body>
-      ${isLogined ? `<a href="http://localhost:3000/auth/logout"><a>` : ''}
+      ${isLogined ? `<a href="http://localhost:3000/auth/logout">로그아웃<a>` : ''}
       ${body}
     </body>
     </html>

@@ -7,6 +7,8 @@ import { restrict } from './middlewares/login';
 
 const app = express();
 const FileStore = sessionFileStore(session);
+const authController = require('../controllers/auth');
+const paperController = require('./controllers/paper');
 
 export const sessionOptions = {
   name: 'my.connect.sid',
@@ -24,15 +26,16 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 // 메인
-app.get('/', restrict, function (req, res) {
-  res.redirect('/paper');
-});
+app.get('/', restrict, authController.auth);
 
 // 인증 라우터
 app.use('/auth', authRouter);
 
 // 롤링 페이퍼 라우터
-app.use('/paper', paperRouter);
+app.use('/paper', restrict, paperRouter);
+
+// 롤링 페이퍼 공유 링크 라우터
+app.use('/:uid', paperController.getPaperByUid)
 
 // 에러 미들웨어
 app.use(function (error: Error, req: Request, res: Response, next: NextFunction) {

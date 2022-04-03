@@ -1,11 +1,15 @@
 import fs from 'fs';
 import { NextFunction, Request, Response } from 'express';
 import { setEncryption, setDecryption } from '../middlewares/pbk';
-import { users } from '../routes/auth';
+import { users } from '../models/users';
 import { HOST_ADDRESS } from '../config';
 import { sessionOptions } from '../app';
 import { SessionData } from '../types';
 import template from '../template';
+
+function auth (req: Request, res: Response) {
+  res.redirect('/paper');
+}
 
 function getRegisterUser (req: Request, res: Response) {
   const html = template.HTML('register', `
@@ -56,10 +60,10 @@ function getLoginUser (req: Request, res: Response) {
 function postLoginUser (req: Request, res: Response, next: NextFunction) {
   const {userId, userPw} = req.body;
   setDecryption(users, userId, userPw, (err, user) => {
-    if (err === null) return res.redirect('/auth/login');
+    if (err === null) return res.redirect('/auth/register');
     if (user) {
-      req.session.save(function() {
-        (req.session as SessionData).user = user;
+      req.session.regenerate(function() {
+        (req.session as SessionData).user = {...user, id: userId};
         (req.session as SessionData).isLogined = true;
         res.redirect('/paper');
       })
@@ -83,6 +87,7 @@ function getLogout (req: Request, res: Response) {
 }
 
 module.exports = {
+  auth,
   getRegisterUser,
   postRegisterUser,
   getLoginUser,
