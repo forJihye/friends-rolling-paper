@@ -2,13 +2,15 @@ import express, {Request, Response, NextFunction} from 'express';
 import session, { Session } from 'express-session';
 import sessionFileStore from 'session-file-store';
 import authRouter from './routes/auth';
+import mainRouter from './routes/main';
 import paperRouter from './routes/paper';
-import { restrict } from './middlewares/login';
+import mypaperRouter from './routes/mypaper';
+import { authRestrict } from './middlewares/login';
+import { appRoot } from './controllers/app';
 
 const app = express();
 const FileStore = sessionFileStore(session);
-const authController = require('./controllers/auth');
-const paperController = require('./controllers/paper');
+
 
 export const sessionOptions = {
   name: 'my.connect.sid',
@@ -26,16 +28,19 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 // 메인
-app.get('/', restrict, authController.auth);
+app.get('/', appRoot);
 
 // 인증 라우터
 app.use('/auth', authRouter);
 
 // 롤링 페이퍼 라우터
-app.use('/paper', restrict, paperRouter);
+app.use('/main', authRestrict, mainRouter);
 
 // 롤링 페이퍼 공유 링크 라우터
-app.use('/:uid', paperController.getPaperByUid)
+app.use('/paper', paperRouter);
+
+// 마이페이지
+app.use('/mypaper', authRestrict, mypaperRouter);
 
 // 에러 미들웨어
 app.use(function (error: Error, req: Request, res: Response, next: NextFunction) {

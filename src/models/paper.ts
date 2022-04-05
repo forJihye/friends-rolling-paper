@@ -14,7 +14,7 @@ export const papers: PaperConfig = {
     userId: 'ghdrlfehd',
     friendName: '홍길순',
     friendBirth: '0706',
-    isCompleted: true,
+    isCompleted: false,
     completedId: ''
   }
 }

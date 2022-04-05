@@ -7,9 +7,6 @@ import { sessionOptions } from '../app';
 import { SessionData } from '../types';
 import template from '../template';
 
-function auth (req: Request, res: Response) {
-  res.redirect('/paper');
-}
 
 function getRegisterUser (req: Request, res: Response) {
   const html = template.HTML('register', `
@@ -65,7 +62,7 @@ function postLoginUser (req: Request, res: Response, next: NextFunction) {
       req.session.regenerate(function() {
         (req.session as SessionData).user = {...user, id: userId};
         (req.session as SessionData).isLogined = true;
-        res.redirect('/paper');
+        res.redirect('/main');
       })
     } else {
       (req.session as SessionData).isLogined = false;
@@ -87,7 +84,6 @@ function getLogout (req: Request, res: Response) {
 }
 
 module.exports = {
-  auth,
   getRegisterUser,
   postRegisterUser,
   getLoginUser,
