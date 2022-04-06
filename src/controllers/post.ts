@@ -5,13 +5,14 @@ import template from '../template';
 
 export function getPaperPost (req: Request, res: Response) {
   const {paperId, uid: paperUid} = req.params;
+  console.log(req.params)
   const paper = papers.find(({id}) => id === Number(paperId)) as PaperConfig;
   if (!paper) {
     res.json({message: '찾을 수 없는 롤링 페이퍼 입니다.'});
   } else {
     const html = template.HTML('롤링 페이퍼', `
       <h3>${paper.name} 의 롤링 페이퍼</h3>
-      <form action="/post/${paperId}/${paperUid}" method="post" enctype='application/json'>
+      <form action="/paper/${paperId}/${paperUid}" method="post" enctype='application/json'>
         <p><input type="text" name="name" placeholder="작성자" value="김동수" /></p>
         <p>
           <textarea name="content" rows="5" cols="30">

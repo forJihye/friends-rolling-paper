@@ -3,7 +3,7 @@ import session, { Session } from 'express-session';
 import sessionFileStore from 'session-file-store';
 import authRouter from './routes/auth';
 import paperRouter from './routes/paper';
-import postRouter from './routes/post';
+import paperPostRouter from './routes/paperPost';
 import mainRouter from './routes/main';
 import mypaperRouter from './routes/mypaper';
 import { authRestrict } from './middlewares/login';
@@ -41,7 +41,7 @@ app.use('/main', authRestrict, mainRouter);
 app.use('/paper', authRestrict, paperRouter);
 
 // 롤링 페이퍼 작성 라우터
-app.use('/post', postRouter);
+app.use('/paper', paperPostRouter);
 
 // 에러 미들웨어
 app.use(function (error: Error, req: Request, res: Response, next: NextFunction) {

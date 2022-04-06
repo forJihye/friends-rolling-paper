@@ -31,7 +31,7 @@ export function postCreatePaper (req: Request, res: Response) {
     const index = papers.findIndex(({userId}) => userId === user.id);
     // papers.splice(index, 1, {...papers[index], uid: uuidv1()})
     papers.splice(index, 1, {...papers[index], name: friendName, birth: friendBirth, uid: '0b30f880-adb4-11ec-9205-2b546b0d71f6'})
-    res.redirect(301, `/post/${papers[index].id}/0b30f880-adb4-11ec-9205-2b546b0d71f6`);
+    res.redirect(301, `/paper/${papers[index].id}/0b30f880-adb4-11ec-9205-2b546b0d71f6`);
   } else {
     res.redirect(301, '/auth/login');
   }
