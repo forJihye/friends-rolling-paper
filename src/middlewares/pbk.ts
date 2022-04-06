@@ -9,8 +9,8 @@ export const setEncryption = (userPw: string, callback: (v: null|{salt: string; 
   });
 }
 
-export const setDecryption = (users: Users, userId: string, userPw: string, callback: (err: null|boolean, user: null|any) => void) => {
-  const user = users[userId];
+export const setDecryption = (users: Users[], userId: string, userPw: string, callback: (err: null|boolean, user: null|any) => void) => {
+  const user = users.find((user) => user.userId === userId)
   if (!user) return callback(null, null);
   if (!user.hash || !user.salt) return callback(null, null);
   hash({ password: userPw, salt: user.salt }, function (err: any, pass: any, salt: any, hash: any) {

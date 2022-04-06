@@ -3,12 +3,7 @@ import { Users } from '../models/users';
 
 type SessionData = (
   Session & { 
-    user: {
-      name: string;
-      salt: string;
-      hash: string;
-      id: string;
-    };
+    user: { name: string; id: string; } | null;
     isLogined: boolean; 
   }
 )

@@ -1,17 +1,17 @@
 import express from 'express';
+import {getRegisterUser, postRegisterUser, getLoginUser, postLoginUser, getLogout} from '../controllers/auth';
 
 const router = express.Router();
-const authController = require('../controllers/auth');
 
-router.get('/register', authController.getRegisterUser);
+router.get('/user', getRegisterUser);
 
-router.post('/register', authController.postRegisterUser);
+router.post('/user', postRegisterUser);
 
-router.get('/login', authController.getLoginUser);
+router.get('/login', getLoginUser);
 
-router.post('/login', authController.postLoginUser);
+router.post('/login', postLoginUser);
 
-router.get('/logout', authController.getLogout);
+router.get('/logout', getLogout);
 
 export default router;
 

@@ -3,7 +3,7 @@ import { HOST_ADDRESS } from "../config";
 import template from "../template";
 import { SessionData } from "../types";
 
-export function appRoot (req: Request, res: Response) {
+export function appController (req: Request, res: Response) {
   const { isLogined } = req.session as SessionData;
   const html = template.HTML('메인', `
   <h1>메인 화면</h1><br />
@@ -11,7 +11,7 @@ export function appRoot (req: Request, res: Response) {
   ? `<a href="${HOST_ADDRESS}/auth/login">로그인</a>`
   : `<div>
     <a href="${HOST_ADDRESS}/auth/logout">로그아웃</a>
-    <a href="${HOST_ADDRESS}/main">롤링 페이퍼 만들기</a>
+    <a href="${HOST_ADDRESS}/paper">롤링 페이퍼 만들기</a>
   </div>`}
   `)
   res.send(html);

@@ -2,11 +2,12 @@ import express, {Request, Response, NextFunction} from 'express';
 import session, { Session } from 'express-session';
 import sessionFileStore from 'session-file-store';
 import authRouter from './routes/auth';
-import mainRouter from './routes/main';
 import paperRouter from './routes/paper';
+import postRouter from './routes/post';
+import mainRouter from './routes/main';
 import mypaperRouter from './routes/mypaper';
 import { authRestrict } from './middlewares/login';
-import { appRoot } from './controllers/app';
+import { appController } from './controllers/app';
 
 const app = express();
 const FileStore = sessionFileStore(session);
@@ -28,19 +29,19 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 // 메인
-app.get('/', appRoot);
+app.get('/', appController);
 
 // 인증 라우터
 app.use('/auth', authRouter);
 
-// 롤링 페이퍼 라우터
+// 메인
 app.use('/main', authRestrict, mainRouter);
 
-// 롤링 페이퍼 공유 링크 라우터
-app.use('/paper', paperRouter);
+// 롤링 페이퍼 라우터
+app.use('/paper', authRestrict, paperRouter);
 
-// 마이페이지
-app.use('/mypaper', authRestrict, mypaperRouter);
+// 롤링 페이퍼 작성 라우터
+app.use('/post', postRouter);
 
 // 에러 미들웨어
 app.use(function (error: Error, req: Request, res: Response, next: NextFunction) {

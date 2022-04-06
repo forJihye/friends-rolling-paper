@@ -1,12 +1,12 @@
 import express from 'express';
-import {getPaperByUid, postPaperComplete, postPaperInsert} from '../controllers/paper'
+import { getCreatePaper, postCreatePaper} from '../controllers/paper';
 
 const router = express.Router();
 
-router.get('/:uid', getPaperByUid);
-router.post('/:uid', postPaperInsert);
-
-router.post('/:uid/complete', postPaperComplete)
+router.get('/', getCreatePaper);
+router.post('/', postCreatePaper);
+// router.get('/:uid', getPaperByUid);
+// router.post('/:uid', postPaperInsert);
+// router.post('/:uid/complete', postPaperComplete)
 
 export default router;
-
